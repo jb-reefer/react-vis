@@ -55,10 +55,11 @@ function getWedgesToRender({data}) {
   });
 }
 
-function generateLabels(mappedData) {
+function generateLabels(mappedData, labelSpaceFactor) {
   return mappedData.reduce((res, row) => {
     const {angle, angle0, radius, label, subLabel} = row;
     const centeredAngle = (angle + angle0) / 2;
+    const labelOffsetFacor = labelSpaceFactor? labelSpaceFactor : 1.1;
 
     // unfortunate, but true fact: d3 starts its radians at 12 oclock rather than 3
     // and move clockwise rather than counter clockwise. why why why!
@@ -67,7 +68,7 @@ function generateLabels(mappedData) {
     if (row.label) {
       newLabels.push({
         angle: updatedAngle,
-        radius: radius * 1.1,
+        radius: radius * labelOffsetFacor,
         label,
         style: {fontSize: '12px'}
       });
@@ -76,7 +77,7 @@ function generateLabels(mappedData) {
     if (subLabel) {
       newLabels.push({
         angle: updatedAngle,
-        radius: radius * 1.1,
+        radius: radius * labelOffsetFacor,
         label: subLabel,
         yOffset: 12,
         style: {fontSize: '10px'}
@@ -110,6 +111,7 @@ class RadialChart extends Component {
       colorType,
       radius,
       innerRadius,
+      labelSpaceFactor,
       showLabels,
       margin,
       onMouseLeave,
@@ -148,9 +150,9 @@ class RadialChart extends Component {
         xDomain={[-radialDomain, radialDomain]}
         yDomain={[-radialDomain, radialDomain]}>
         <ArcSeries {...arcProps}/>
-        {showLabels && !labelsAboveChildren && <LabelSeries data={generateLabels(mappedData)}/>}
+        {showLabels && !labelsAboveChildren && <LabelSeries data={generateLabels(mappedData, labelSpaceFactor)}/>}
         {children}
-        {showLabels && labelsAboveChildren && <LabelSeries data={generateLabels(mappedData)}/>}
+        {showLabels && labelsAboveChildren && <LabelSeries data={generateLabels(mappedData, labelSpaceFactor)}/>}
       </XYPlot>
     );
   }
