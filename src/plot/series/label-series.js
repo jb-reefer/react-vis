@@ -61,7 +61,7 @@ class LabelSeries extends AbstractSeries {
          ref="container"
          transform={`translate(${marginLeft},${marginTop})`}>
         {data.reduce((res, d, i) => {
-          const {label, style, xOffset, yOffset} = d;
+          const {label, style, xOffset, yOffset, classTag} = d;
           if (!label) {
             return res;
           }
@@ -74,7 +74,7 @@ class LabelSeries extends AbstractSeries {
           const y = yVal + ((allowOffsetToBeReversed && aboveMiddle) ? -1 : 1) * (yOffset || 0);
           const attrs = {
             alignmentBaseline: aboveMiddle ? 'text-before-edge' : 'text-after-edge',
-            className: 'rv-xy-plot__series--label-text',
+            className: 'rv-xy-plot__series--label-text' + ` ${classTag}`,
             key: i,
             onClick: e => this._valueClickHandler(d, e),
             onContextMenu: e => this._valueRightClickHandler(d, e),

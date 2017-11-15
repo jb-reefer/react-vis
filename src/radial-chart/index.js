@@ -71,7 +71,8 @@ function generateLabels(mappedData, labelSpaceFactor) {
         angle: updatedAngle,
         radius: radius * labelOffsetFactor,
         label,
-        style: {fontSize: '12px'}
+        style: {fontSize: '12px'},
+        classTag: 'label'
       });
     }
 
@@ -81,7 +82,8 @@ function generateLabels(mappedData, labelSpaceFactor) {
         radius: radius * labelOffsetFactor,
         label: subLabel,
         yOffset: 12,
-        style: {fontSize: '10px'}
+        style: {fontSize: '10px'},
+        classTag: 'subLabel'
       });
     }
     return res.concat(newLabels);
