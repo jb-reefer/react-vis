@@ -59,7 +59,8 @@ function generateLabels(mappedData, labelSpaceFactor) {
   return mappedData.reduce((res, row) => {
     const {angle, angle0, radius, label, subLabel} = row;
     const centeredAngle = (angle + angle0) / 2;
-    const labelOffsetFacor = labelSpaceFactor? labelSpaceFactor : 1.1;
+    const labelOffsetFactor = labelSpaceFactor? labelSpaceFactor : 1.1;
+    console.log(labelOffsetFactor, labelSpaceFactor);
 
     // unfortunate, but true fact: d3 starts its radians at 12 oclock rather than 3
     // and move clockwise rather than counter clockwise. why why why!
@@ -68,7 +69,7 @@ function generateLabels(mappedData, labelSpaceFactor) {
     if (row.label) {
       newLabels.push({
         angle: updatedAngle,
-        radius: radius * labelOffsetFacor,
+        radius: radius * labelOffsetFactor,
         label,
         style: {fontSize: '12px'}
       });
@@ -77,7 +78,7 @@ function generateLabels(mappedData, labelSpaceFactor) {
     if (subLabel) {
       newLabels.push({
         angle: updatedAngle,
-        radius: radius * labelOffsetFacor,
+        radius: radius * labelOffsetFactor,
         label: subLabel,
         yOffset: 12,
         style: {fontSize: '10px'}
